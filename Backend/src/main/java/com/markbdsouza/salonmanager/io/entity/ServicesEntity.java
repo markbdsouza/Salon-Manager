@@ -3,9 +3,10 @@ package com.markbdsouza.salonmanager.io.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="service_master")
-public class ServiceMasterEntity {
-    @Id
+@Table(name="services")
+public class ServicesEntity   extends Auditable<String> {
+    private static final long serialVersionUID = 1496673953145573255L;
+        @Id
     @GeneratedValue()
     private String id;
     @Column(nullable = false)

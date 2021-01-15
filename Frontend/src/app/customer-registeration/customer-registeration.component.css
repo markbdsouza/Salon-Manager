@@ -1,0 +1,10 @@
+.btn-register-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 100%;
+}
+.btn-register-holder .btn {
+  min-width: 65%;
+  background-color: brown;
+}

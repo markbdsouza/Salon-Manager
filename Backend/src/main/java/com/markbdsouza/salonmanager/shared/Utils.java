@@ -1,4 +1,4 @@
-package com.appdeveloperblog.app.ws.shared.dto;
+package com.markbdsouza.salonmanager.shared;
 
 import org.springframework.stereotype.Component;
 
@@ -9,13 +9,12 @@ import java.util.Random;
 public class Utils {
 
     private final Random RANDOM = new SecureRandom();
-    private final String ALPHABET = "1023456789QWERTYUIOOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm";
+    private final String ALPHABET = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm";
 
-
-    public String generateUserId(int length){
+    public String generateCustomerId(int length){
         return generateRandomString(length);
     }
-    public String generateAddressId(int length){
+    public String generateEmployeeId(int length){
         return generateRandomString(length);
     }
 
