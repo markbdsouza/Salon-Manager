@@ -1,3 +1,4 @@
+@import "../../../styles.scss";
 .btn-register-holder {
   display: flex;
   justify-content: center;
@@ -6,5 +7,5 @@
 }
 .btn-register-holder .btn {
   min-width: 65%;
-  background-color: brown;
+  background-color: $secondary-color;
 }

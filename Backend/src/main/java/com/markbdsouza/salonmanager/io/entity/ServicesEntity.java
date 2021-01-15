@@ -3,11 +3,11 @@ package com.markbdsouza.salonmanager.io.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="services")
-public class ServicesEntity   extends Auditable<String> {
+@Table(name = "services")
+public class ServicesEntity extends Auditable<String> {
     private static final long serialVersionUID = 1496673953145573255L;
-        @Id
-    @GeneratedValue()
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     @Column(nullable = false)
     private String serviceTypeId;

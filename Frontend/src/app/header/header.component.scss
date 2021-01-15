@@ -1,0 +1,26 @@
+@import "../../styles.scss";
+.header {
+  min-width: 100vw;
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba($primary-color, 0.8);
+}
+
+.appName {
+  font-size: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+}
+.appDescription {
+  font-size: 1.5rem;
+}
+.logo {
+  border: 3px rgba($highlight-color, 0.6) solid;
+  border-radius: 50%;
+  height: 5rem;
+}
+.welcomeDiv {
+  text-align: right;
+}

@@ -1,16 +1,13 @@
 package com.markbdsouza.salonmanager.io.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="customer_services")
 public class CustomerServicesEntity {
     private static final long serialVersionUID = -2503907167963494127L;
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
 

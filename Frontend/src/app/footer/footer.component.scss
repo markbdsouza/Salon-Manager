@@ -1,0 +1,9 @@
+@import "../../styles.scss";
+.footer {
+  min-width: 100vw;
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba($primary-color, 0.8);
+}

@@ -1,0 +1,12 @@
+<div class="container">
+    <form [formGroup]="phoneNumberFormGroup" (ngSubmit)="searchByPhoneNumber()">
+        <div>
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text" formControlName="phoneNumber" id="phoneNumber" class="form-control mb-2"
+                placeholder="Phone number">
+
+        </div>
+        <button class="btn btn-dark">Search</button>
+        <button class="btn btn-primary ">Search</button>
+    </form>
+</div>

@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class CustomerEntity  extends Auditable<String>  {
     private static final long serialVersionUID = 5609254628708546255L;
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(nullable = false)
     private String customerId;

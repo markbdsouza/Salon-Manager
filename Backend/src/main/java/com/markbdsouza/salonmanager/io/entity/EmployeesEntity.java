@@ -8,7 +8,7 @@ import java.util.Date;
 public class EmployeesEntity   extends Auditable<String> {
     private static final long serialVersionUID = -8675452012893922301L;
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(nullable = false)
     private String employeeId;

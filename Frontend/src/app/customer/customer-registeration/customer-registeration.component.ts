@@ -5,13 +5,14 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { CustomerRegisterationService } from "../services/customer-registeration.service";
-import { Customer } from "./customer";
+import { CustomerService } from "src/app/services/customer.service";
+
+import { Customer } from "../customer";
 
 @Component({
   selector: "app-customer-registeration",
   templateUrl: "./customer-registeration.component.html",
-  styleUrls: ["./customer-registeration.component.css"],
+  styleUrls: ["./customer-registeration.component.scss"],
 })
 export class CustomerRegisterationComponent implements OnInit {
   customerRegisterationFormGroup: FormGroup;
@@ -19,7 +20,7 @@ export class CustomerRegisterationComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private customerRegisterationService: CustomerRegisterationService
+    private customerRegisterationService: CustomerService
   ) {}
 
   ngOnInit() {
@@ -40,16 +41,13 @@ export class CustomerRegisterationComponent implements OnInit {
       ]),
       phoneNumber: new FormControl("", [
         Validators.required,
-        Validators.pattern(
-          "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
-        ),
+        Validators.pattern("^[0-9]"),
       ]),
     });
   }
 
   createContact() {
     this.customer = this.customerRegisterationFormGroup.value;
-    console.log(this.customer);
     this.customerRegisterationService.createCustomer(this.customer).subscribe(
       (res) => {
         console.log("success");

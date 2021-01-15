@@ -1,0 +1,21 @@
+// set the variables you wish to change
+// $body-bg: #eee;
+// $body-color: #eee;
+
+$theme-colors: (
+  "primary": #4abdac,
+  "secondary": #f78733,
+  "light": #dfdce3,
+);
+$body-bg: #111;
+$body-color: #dfdce3;
+$primary-color: #4abdac;
+$secondary-color: #f78733;
+$highlight-color: #fc4a1a;
+
+// import in the bootstrap SASS file
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+body {
+  min-height: 100vh;
+}
