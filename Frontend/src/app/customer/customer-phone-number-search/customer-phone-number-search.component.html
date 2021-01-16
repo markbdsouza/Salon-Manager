@@ -1,12 +1,15 @@
-<div class="container">
-    <form [formGroup]="phoneNumberFormGroup" (ngSubmit)="searchByPhoneNumber()">
-        <div>
+<form [formGroup]="phoneNumberFormGroup" (ngSubmit)="searchByPhoneNumber()">
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-sm-3 text-right">
             <label for="phoneNumber">Phone Number</label>
-            <input type="text" formControlName="phoneNumber" id="phoneNumber" class="form-control mb-2"
-                placeholder="Phone number">
-
         </div>
-        <button class="btn btn-dark">Search</button>
-        <button class="btn btn-primary ">Search</button>
-    </form>
-</div>
+        <div class="col-sm-6">
+            <input type="text" formControlName="phoneNumber" id="phoneNumber" class="form-control mb-2 ip-mb-0"
+                placeholder="Phone number">
+        </div>
+
+        <div class="col-sm-3 w-100">
+            <button class="btn btn-secondary w-100 ">Search</button>
+        </div>
+    </div>
+</form>

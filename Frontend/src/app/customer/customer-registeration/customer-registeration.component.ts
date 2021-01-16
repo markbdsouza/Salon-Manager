@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -17,6 +17,7 @@ import { Customer } from "../customer";
 export class CustomerRegisterationComponent implements OnInit {
   customerRegisterationFormGroup: FormGroup;
   customer: Customer;
+  @Output() callParent = new EventEmitter();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,7 +52,7 @@ export class CustomerRegisterationComponent implements OnInit {
     this.customerRegisterationService.createCustomer(this.customer).subscribe(
       (res) => {
         console.log("success");
-        console.log(res);
+        this.callParent.emit(res);
       },
       (err) => {
         console.log("ERROR" + err);

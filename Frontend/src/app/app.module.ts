@@ -7,6 +7,8 @@ import { HeaderComponent } from "./header/header.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CustomerPhoneNumberSearchComponent } from "./customer/customer-phone-number-search/customer-phone-number-search.component";
 import { CustomerRegisterationComponent } from "./customer/customer-registeration/customer-registeration.component";
+import { CustomerDetailsComponent } from './customer/customer-details/customer-details.component';
+import { CustomerComponent } from './customer/customer.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,8 @@ import { CustomerRegisterationComponent } from "./customer/customer-registeratio
     HeaderComponent,
     CustomerRegisterationComponent,
     CustomerPhoneNumberSearchComponent,
+    CustomerDetailsComponent,
+    CustomerComponent,
   ],
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   providers: [],

@@ -1,0 +1,17 @@
+<div class="" [hidden]="!isCustomerInFocus">
+    <app-customer-details [customerDetails]='customer'></app-customer-details>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <app-customer-phone-number-search (callParent)=getMsgFromBaby($event)></app-customer-phone-number-search>
+    </div>
+    <div class="col-sm-6">
+        <button class="btn btn-secondary" (click)="registerClick()">
+            Register
+        </button>
+    </div>
+</div>
+
+<div *ngIf="isRegisterDisplayed">
+    <app-customer-registeration (callParent)=getMsgFromBaby($event)></app-customer-registeration>
+</div>

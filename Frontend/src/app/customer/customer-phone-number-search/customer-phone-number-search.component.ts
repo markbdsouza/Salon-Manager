@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -14,6 +14,7 @@ import { CustomerService } from "src/app/services/customer.service";
 })
 export class CustomerPhoneNumberSearchComponent implements OnInit {
   phoneNumberFormGroup: FormGroup;
+  @Output() callParent = new EventEmitter();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,6 +35,7 @@ export class CustomerPhoneNumberSearchComponent implements OnInit {
     this.customerService.findByPhoneNumber(phoneNumber).subscribe(
       (res) => {
         console.log(res);
+        this.callParent.emit(res);
       },
       (err) => {
         console.log(err);
