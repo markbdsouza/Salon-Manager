@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
+import { Router } from "@angular/router";
 import { CustomerService } from "src/app/services/customer.service";
 
 import { Customer } from "../customer";
@@ -22,7 +23,8 @@ export class CustomerRegisterationComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private customerRegisterationService: CustomerService
+    private customerRegisterationService: CustomerService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -54,6 +56,9 @@ export class CustomerRegisterationComponent implements OnInit {
       (res) => {
         console.log("success");
         this.callParent.emit(res);
+        this.router.navigate(["/Customer"], {
+          queryParams: { id: res.customerId },
+        });
       },
       (err) => {
         console.log("ERROR" + err);

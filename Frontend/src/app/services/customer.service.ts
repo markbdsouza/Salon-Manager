@@ -19,4 +19,9 @@ export class CustomerService {
     const findByPhoneURL = `${this.customersUrl}/phoneNumber/${phoneNumber}`;
     return this.httpClient.get<Customer>(findByPhoneURL);
   }
+
+  findByCustomerId(id: string): Observable<Customer> {
+    const findByCustomerId = `${this.customersUrl}/${id}`;
+    return this.httpClient.get<Customer>(findByCustomerId);
+  }
 }

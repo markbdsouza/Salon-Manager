@@ -5,11 +5,13 @@ import com.markbdsouza.salonmanager.io.repository.EmployeeRepository;
 import com.markbdsouza.salonmanager.service.EmployeeService;
 import com.markbdsouza.salonmanager.shared.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     public static int EMPLOYEE_ID_LENGTH = 10;

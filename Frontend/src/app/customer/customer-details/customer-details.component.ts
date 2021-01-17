@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { CustomerService } from "src/app/services/customer.service";
 import { Customer } from "../customer";
 
 @Component({
@@ -9,13 +10,25 @@ import { Customer } from "../customer";
 })
 export class CustomerDetailsComponent implements OnInit {
   @Input() customerDetails: Customer;
-  constructor(private route: ActivatedRoute) {}
+  customerId: string;
+
+  constructor(
+    private route: ActivatedRoute,
+    private customerService: CustomerService
+  ) {}
 
   ngOnInit() {
     this.customerDetails = <Customer>{};
     this.route.queryParams.subscribe((params) => {
-      console.log("reading params");
-      console.log(params);
+      this.customerId = params["id"];
+      this.customerService.findByCustomerId(this.customerId).subscribe(
+        (res) => {
+          this.customerDetails = res;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     });
   }
 

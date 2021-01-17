@@ -38,7 +38,9 @@ export class CustomerPhoneNumberSearchComponent implements OnInit {
       (res) => {
         console.log(res);
         this.callParent.emit(res);
-        this.router.navigate(["/Customer", { id: res.customerId }]);
+        this.router.navigate(["/Customer"], {
+          queryParams: { id: res.customerId },
+        });
       },
       (err) => {
         console.log(err);
