@@ -18,6 +18,7 @@ export class CustomerRegisterationComponent implements OnInit {
   customerRegisterationFormGroup: FormGroup;
   customer: Customer;
   @Output() callParent = new EventEmitter();
+  @Output() cancelRegisteration = new EventEmitter();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,5 +59,9 @@ export class CustomerRegisterationComponent implements OnInit {
         console.log("ERROR" + err);
       }
     );
+  }
+
+  onCancel() {
+    this.cancelRegisteration.emit(true);
   }
 }

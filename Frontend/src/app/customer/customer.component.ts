@@ -13,7 +13,6 @@ export class CustomerComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    debugger;
     this.isCustomerInFocus = false;
     this.isRegisterDisplayed = false;
   }
@@ -27,5 +26,11 @@ export class CustomerComponent implements OnInit {
 
   registerClick() {
     this.isRegisterDisplayed = true;
+  }
+
+  cancelRegisteration($event) {
+    if ($event) {
+      this.isRegisterDisplayed = false;
+    }
   }
 }

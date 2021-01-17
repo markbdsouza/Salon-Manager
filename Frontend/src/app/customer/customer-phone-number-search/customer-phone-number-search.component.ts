@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
+import { Router } from "@angular/router";
 import { CustomerService } from "src/app/services/customer.service";
 
 @Component({
@@ -18,7 +19,8 @@ export class CustomerPhoneNumberSearchComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -36,6 +38,7 @@ export class CustomerPhoneNumberSearchComponent implements OnInit {
       (res) => {
         console.log(res);
         this.callParent.emit(res);
+        this.router.navigate(["/Customer", { id: res.customerId }]);
       },
       (err) => {
         console.log(err);

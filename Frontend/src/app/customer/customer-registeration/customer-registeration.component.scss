@@ -1,11 +1,12 @@
 @import "../../../styles.scss";
-.btn-register-holder {
+.btn-holder {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   min-width: 100%;
-}
-.btn-register-holder .btn {
-  min-width: 65%;
-  background-color: $secondary-color;
+
+  .btn {
+    width: 100%;
+    margin: 1rem;
+  }
 }

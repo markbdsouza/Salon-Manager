@@ -7,8 +7,15 @@ import { HeaderComponent } from "./header/header.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CustomerPhoneNumberSearchComponent } from "./customer/customer-phone-number-search/customer-phone-number-search.component";
 import { CustomerRegisterationComponent } from "./customer/customer-registeration/customer-registeration.component";
-import { CustomerDetailsComponent } from './customer/customer-details/customer-details.component';
-import { CustomerComponent } from './customer/customer.component';
+import { CustomerDetailsComponent } from "./customer/customer-details/customer-details.component";
+import { CustomerComponent } from "./customer/customer.component";
+import { RouterModule, Routes } from "@angular/router";
+
+const routes: Routes = [
+  { path: "Register", component: CustomerRegisterationComponent },
+  { path: "Search", component: CustomerPhoneNumberSearchComponent },
+  { path: "Customer", component: CustomerDetailsComponent },
+];
 
 @NgModule({
   declarations: [
@@ -20,7 +27,13 @@ import { CustomerComponent } from './customer/customer.component';
     CustomerDetailsComponent,
     CustomerComponent,
   ],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    RouterModule.forRoot(routes),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -13,5 +13,6 @@
 </div>
 
 <div *ngIf="isRegisterDisplayed">
-    <app-customer-registeration (callParent)=getMsgFromBaby($event)></app-customer-registeration>
+    <app-customer-registeration (callParent)=getMsgFromBaby($event) (cancelRegisteration)=cancelRegisteration($event)>
+    </app-customer-registeration>
 </div>
