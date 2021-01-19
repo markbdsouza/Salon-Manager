@@ -1,3 +1,4 @@
+import { AllServicesComponent } from "./customer-services/all-services/all-services.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
@@ -10,11 +11,15 @@ import { CustomerRegisterationComponent } from "./customer/customer-registeratio
 import { CustomerDetailsComponent } from "./customer/customer-details/customer-details.component";
 import { CustomerComponent } from "./customer/customer.component";
 import { RouterModule, Routes } from "@angular/router";
+import { CustomerServicesComponent } from "./customer-services/customer-services.component";
+import { ServicesComponent } from "./customer-services/services/services.component";
+import { SingleServiceComponent } from './customer-services/services/single-service/single-service.component';
 
 const routes: Routes = [
   { path: "Register", component: CustomerRegisterationComponent },
   { path: "Search", component: CustomerPhoneNumberSearchComponent },
-  { path: "Customer", component: CustomerDetailsComponent },
+  { path: "Customer", component: CustomerServicesComponent },
+  { path: "AllServices", component: AllServicesComponent },
 ];
 
 @NgModule({
@@ -26,6 +31,10 @@ const routes: Routes = [
     CustomerPhoneNumberSearchComponent,
     CustomerDetailsComponent,
     CustomerComponent,
+    CustomerServicesComponent,
+    ServicesComponent,
+    AllServicesComponent,
+    SingleServiceComponent,
   ],
   imports: [
     BrowserModule,

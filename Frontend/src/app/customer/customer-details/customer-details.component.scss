@@ -1,8 +1,12 @@
+@import "../../../styles.scss";
+
 .customerLabel {
   text-align: right;
 }
 
 .customerDetails {
-  border: 2px solid rgba(white, 0.6);
-  border-radius: 3px;
+  margin: 0 2rem;
+  border-radius: 0 0 1rem 1rem;
+  background-color: $primary-color;
+  box-shadow: rgba($secondary-color, 0.6) 0px 2px 3px;
 }

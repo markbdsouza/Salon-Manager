@@ -17,6 +17,9 @@ public class Utils {
     public String generateEmployeeId(int length){
         return generateRandomString(length);
     }
+    public String generateCustomerServiceId(int length){
+        return generateRandomString(length);
+    }
 
     private String generateRandomString(int length){
         StringBuilder returnValue = new StringBuilder(length);

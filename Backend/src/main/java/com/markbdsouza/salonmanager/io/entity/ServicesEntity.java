@@ -1,6 +1,7 @@
 package com.markbdsouza.salonmanager.io.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "services")
@@ -22,6 +23,17 @@ public class ServicesEntity extends Auditable<String> {
     private double taxCost = 0.0;
     @Column(nullable = false)
     private int estimatedMinutes;
+    @OneToMany(mappedBy = "servicesEntity", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<CustomerServicesEntity> customerServices;
+
+    public Set<CustomerServicesEntity> getCustomerServices() {
+        return customerServices;
+    }
+
+    public void setCustomerServices(Set<CustomerServicesEntity> customerServices) {
+        this.customerServices = customerServices;
+    }
 
     public String getId() {
         return id;

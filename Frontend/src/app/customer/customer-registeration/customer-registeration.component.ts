@@ -54,7 +54,6 @@ export class CustomerRegisterationComponent implements OnInit {
     this.customer = this.customerRegisterationFormGroup.value;
     this.customerRegisterationService.createCustomer(this.customer).subscribe(
       (res) => {
-        console.log("success");
         this.callParent.emit(res);
         this.router.navigate(["/Customer"], {
           queryParams: { id: res.customerId },

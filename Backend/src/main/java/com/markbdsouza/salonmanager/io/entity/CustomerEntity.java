@@ -1,6 +1,7 @@
 package com.markbdsouza.salonmanager.io.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="customers")
@@ -19,6 +20,18 @@ public class CustomerEntity  extends Auditable<String>  {
     private String email;
     @Column(nullable = false, length = 15)
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "customerEntity", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<CustomerServicesEntity> customerServices;
+
+    public Set<CustomerServicesEntity> getCustomerServices() {
+        return customerServices;
+    }
+
+    public void setCustomerServices(Set<CustomerServicesEntity> customerServices) {
+        this.customerServices = customerServices;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

@@ -1,0 +1,8 @@
+<div class="container">
+    <h3>All Services Provided</h3>
+    <div class="" *ngFor="let service of serviceArray">
+        <span class="">{{service.name}} ({{service.serviceType}}) -</span>
+        {{service.description}}. <br> Time: {{service.estimatedMinutes}}. <br>
+        Cost: {{service.serviceCost |currency:'INR' }}+{{service.taxCost |currency:'INR'}}
+    </div>
+</div>

@@ -30,6 +30,17 @@ public class EmployeesEntity   extends Auditable<String> {
     private Date joiningDate;
     @Column(nullable = false)
     private boolean isOwner = false;
+//    @OneToMany(mappedBy = "employeesEntity", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    private Set<CustomerServicesEntity> customerServices;
+//
+//    public Set<CustomerServicesEntity> getCustomerServices() {
+//        return customerServices;
+//    }
+//
+//    public void setCustomerServices(Set<CustomerServicesEntity> customerServices) {
+//        this.customerServices = customerServices;
+//    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

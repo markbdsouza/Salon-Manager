@@ -1,0 +1,35 @@
+<th scope="row">{{index+1}}</th>
+<td>
+    <select name="" id="" class="form-control" (change)="typeChanged($event.target)">
+        <option [ngValue]="null" disabled>Service Type</option>
+        <option *ngFor="let type of serviceCategoryList " [value]="type">
+            {{type}}
+        </option>
+    </select>
+</td>
+<td>
+    <select name="ProvideServices" id="ProvideServices" class="form-control" (change)="serviceSelected($event.target)"
+        [(ngModel)]="selectedServiceName">
+        <option [ngValue]=" null" disabled>Choose a service</option>
+        <option *ngFor="let service of serviceNameDynamicOptions " [value]="service.code" [disabled]>
+            {{service.value}}
+        </option>
+    </select>
+</td>
+<td>
+    <div class="serviceDescription"></div>
+</td>
+<td>
+    <select class="form-control" id="quantity" [(ngModel)]="quantity">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+    </select>
+</td>
+
+<td>
+    <button class="btn btn-secondary m-2" (click)="saveRow()" [disabled]="!isSaveEnabled"> Save</button>
+    <button class="btn btn-secondary m-2" disabled>Delete</button>
+</td>

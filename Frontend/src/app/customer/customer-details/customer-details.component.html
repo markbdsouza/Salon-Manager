@@ -1,39 +1,85 @@
-<div class="container mb-4 customerDetails">
-    <div class="row  align-items-center p-2">
-        <div class="col-sm-4">
+<div class="mb-4 customerDetails">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Add Customer Details -->
             <div class="row">
-                <div class="col-sm-4 customerLabel">
-                    <span class="font-weight-bold"> Name: </span>
+                <div class="col-sm-12">
+                    <div class="row display-block text-align-center">
+                        <span> Customer Details </span>
+                    </div>
                 </div>
-                <div class="col-sm-8 customerValue">
-                    {{customerDetails.firstName}} {{customerDetails.lastName}}
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-4 customerLabel">
+                            <span class="font-weight-bold"> Name: </span>
+                        </div>
+                        <div class="col-sm-8 customerValue">
+                            {{customerDetails.firstName}} {{customerDetails.lastName}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-4 customerLabel">
+                            <span class="font-weight-bold">Email: </span>
+                        </div>
+                        <div class="col-sm-8 customerValue">
+                            {{customerDetails.email}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-4 customerLabel">
+                            <span class="font-weight-bold">Phone No:</span>
+                        </div>
+                        <div class="col-sm-8 customerValue">
+                            {{customerDetails.phoneNumber}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-md-4 text-align-center">
+            <!-- Add Services Details -->
+            <div class="">
+                Service Details
+            </div>
             <div class="row">
-                <div class="col-sm-4 customerLabel">
-                    <span class="font-weight-bold">Email: </span>
+                <div class="col-sm-6 customerLabel">
+                    <span class="font-weight-bold">Services Availed:</span>
                 </div>
-                <div class="col-sm-8 customerValue">
-                    {{customerDetails.email}}
+                <div class="col-sm-6 customerValue">
+                    10
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 customerLabel">
+                    <span class="font-weight-bold">Services Completed:</span>
+                </div>
+                <div class="col-sm-6 customerValue">
+                    5
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="row">
-                <div class="col-sm-4 customerLabel">
-                    <span class="font-weight-bold">Phone Number:</span>
-                </div>
-                <div class="col-sm-8 customerValue">
-                    {{customerDetails.phoneNumber}}
-                </div>
+        <div class="col-md-4">
+            <!-- Add Buttons -->
+            <div class="customerOptions">
+                <div class="btn btn-secondary m-2" (click)="addServices()">Services</div>
+                <div class="btn btn-secondary m-2" (click)="checkout()">Checkout</div>
             </div>
+
         </div>
     </div>
-</div>
-<div class="customerOptions">
-    <div class="btn btn-secondary m-2" (click)="addServices()">Add Services</div>
-    <div class="btn btn-secondary m-2" (click)="checkout()">Checkout</div>
 
+
+
+
+
+
+    <div class="row  align-items-center p-2">
+
+
+
+    </div>
 </div>
