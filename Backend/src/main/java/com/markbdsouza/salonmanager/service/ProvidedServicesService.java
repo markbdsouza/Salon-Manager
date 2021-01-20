@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface ProvidedServicesService {
     List<ServicesDTO> getAllServices();
-    CustomersServicesDTO saveCustomerService(String customerId, String date, ServiceRegisterationDTO serviceRegDTO);
+    CustomersServicesDTO  saveCustomerService(String customerId, String date, List<ServiceRegisterationDTO> serviceRegDTOList);
+    CustomersServicesDTO  getCustomerServices(String customerId, String date);
+
 }

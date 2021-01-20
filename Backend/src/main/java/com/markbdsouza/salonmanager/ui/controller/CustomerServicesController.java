@@ -25,19 +25,30 @@ public class CustomerServicesController {
     @PostMapping(path = "/{customerId}/{Date}")
     public ResponseEntity<CustomerServicesResponseModel> saveCustomerServices(@PathVariable String customerId,
                                                                               @PathVariable String Date,
-                                                                              @RequestBody CustomerServiceRegistrationRequestModel serviceRegModel) {
-        ServiceRegisterationDTO serviceRegDTO = new ServiceRegisterationDTO();
-        BeanUtils.copyProperties(serviceRegModel,serviceRegDTO);
-        CustomersServicesDTO customersServicesDTO = providedServicesService.saveCustomerService(customerId, Date, serviceRegDTO);
+                                                                              @RequestBody List<CustomerServiceRegistrationRequestModel> serviceRegModelList) {
+        ServiceRegisterationDTO serviceRegDTO;
+        List<ServiceRegisterationDTO> serviceRegDTOList = new ArrayList<>();
+        for (CustomerServiceRegistrationRequestModel requestModel : serviceRegModelList) {
+            serviceRegDTO = new ServiceRegisterationDTO();
+            BeanUtils.copyProperties(requestModel, serviceRegDTO);
+            serviceRegDTOList.add(serviceRegDTO);
+        }
+        CustomersServicesDTO  customersServicesDTO = providedServicesService.saveCustomerService(customerId, Date, serviceRegDTOList);
+        CustomerServicesResponseModel returnObject = createResponseObject(customersServicesDTO);
+        return new ResponseEntity(returnObject, HttpStatus.CREATED);
+    }
 
+    @GetMapping(path="/{customerId}/{Date}")
+    public ResponseEntity<CustomerServicesResponseModel> getCustomerServices(@PathVariable String customerId,
+                                                                              @PathVariable String Date
+                                                                              ) {
+        CustomersServicesDTO  customersServicesDTO = providedServicesService.getCustomerServices(customerId, Date);
         CustomerServicesResponseModel returnObject = createResponseObject(customersServicesDTO);
         return new ResponseEntity(returnObject, HttpStatus.CREATED);
     }
 
 
-
-
-    private CustomerServicesResponseModel createResponseObject(CustomersServicesDTO customersServicesDTO){
+    private CustomerServicesResponseModel createResponseObject(CustomersServicesDTO  customersServicesDTO){
         CustomerServicesResponseModel returnObject = new CustomerServicesResponseModel();
         List<ServiceRegisterationModel> serviceRegisterationModelList = new ArrayList<>();
         ServiceRegisterationModel serviceRegisterationModel;

@@ -1,45 +1,3 @@
-<!-- <div class="" *ngFor="let service of serviceArray">
-    {{service.name}} - {{service.serviceType}}
-    {{service.description}}. Time: {{service.estimatedMinutes}}
-    : {{service.serviceCost}}+{{service.taxCost}}
-</div> -->
-<!-- 
-<div class="container">
-    <h3>Customer Services</h3>
-
-    <form [formGroup]="customerServicesForm" (ngSubmit)="onFormSubmit()">
-        <div class="">
-            <select name="ProvideServices" id="ProvideServices" class="form-control" formControlName="serviceTypeId">
-                <option [ngValue]="null" disabled>Choose a service</option>
-                <option *ngFor="let service of serviceArray " [value]="service.serviceTypeId">{{service.name}}</option>
-            </select>
-            <div *ngIf="serviceTypeId.invalid && customerServicesForm.dirty" class="error">
-                Service Name is required
-            </div>
-        </div>
-
-        <div class="">
-            <div class="form-group">
-                <label for="quantity">Quantity</label>
-                <select class="form-control" id="quantity" formControlName="quantity">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
-            <div *ngIf="quantity.invalid && customerServicesForm.dirty" class="error">
-                Quantity required.
-            </div>
-        </div>
-        <button class="btn btn-secondary m-2" type="submit">Save</button>
-        <button class="btn btn-secondary m-2" disabled>Delete</button>
-
-    </form>
-</div> -->
-
-
 <table class="table table-striped container">
     <thead>
         <tr>
@@ -52,10 +10,14 @@
         </tr>
     </thead>
     <tbody>
-        <tr single-service-tr *ngFor="let data of CustomerServiceList;let i = index" [index]="i"
-            [serviceList]="serviceList" [serviceTypeList]="serviceTypeList" [asd]="data">
+        <tr single-service-tr *ngFor="let customerServiceObj of CustomerServiceList;let i = index" [index]="i"
+            [serviceList]="serviceList" [serviceTypeList]="serviceTypeList"
+            [customerServiceRowData]="customerServiceObj" #serviceComponent (onDelete)="removeService(i)">
+            {{customerServiceObj.serviceTypeId}}
         </tr>
     </tbody>
 </table>
 
 <button class="btn btn-secondary" (click)="addServices()">Add Services</button>
+<button class="btn btn-secondary" (click)="saveAll()">Save All</button>
+<button class="btn btn-secondary" (click)="doSomething()">DO</button>

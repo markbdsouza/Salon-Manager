@@ -1,6 +1,6 @@
 <th scope="row">{{index+1}}</th>
 <td>
-    <select name="" id="" class="form-control" (change)="typeChanged($event.target)">
+    <select name="" id="" class="form-control" (change)="typeChanged()" [(ngModel)]="selectedServiceCategory">
         <option [ngValue]="null" disabled>Service Type</option>
         <option *ngFor="let type of serviceCategoryList " [value]="type">
             {{type}}
@@ -9,7 +9,11 @@
 </td>
 <td>
     <select name="ProvideServices" id="ProvideServices" class="form-control" (change)="serviceSelected($event.target)"
-        [(ngModel)]="selectedServiceName">
+        [(ngModel)]="customerServiceRowData.serviceTypeId">
+
+        <!-- <select name="ProvideServices" id="ProvideServices" class="form-control" (change)="serviceSelected($event.target)"
+        [(ngModel)]="selectedServiceName"> -->
+
         <option [ngValue]=" null" disabled>Choose a service</option>
         <option *ngFor="let service of serviceNameDynamicOptions " [value]="service.code" [disabled]>
             {{service.value}}
@@ -17,10 +21,12 @@
     </select>
 </td>
 <td>
-    <div class="serviceDescription"></div>
+    <div class="serviceDescription" [textContent]="serviceDescription"></div>
+    <!-- <input type="text" [(ngModel)]="serviceDescription" > -->
 </td>
 <td>
-    <select class="form-control" id="quantity" [(ngModel)]="quantity">
+    <!-- <select class="form-control" id="quantity" [(ngModel)]="quantity"> -->
+    <select class="form-control" id="quantity" [(ngModel)]="customerServiceRowData.quantity">
         <option>1</option>
         <option>2</option>
         <option>3</option>
@@ -31,5 +37,5 @@
 
 <td>
     <button class="btn btn-secondary m-2" (click)="saveRow()" [disabled]="!isSaveEnabled"> Save</button>
-    <button class="btn btn-secondary m-2" disabled>Delete</button>
+    <button class="btn btn-secondary m-2" (click)="delete()">Delete</button>
 </td>

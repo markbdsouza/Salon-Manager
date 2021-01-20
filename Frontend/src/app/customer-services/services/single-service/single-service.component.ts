@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { INSPECT_MAX_BYTES } from "buffer";
 import { ProvidedServiceService } from "src/app/services/provided-service.service";
 import { CustomerServiceModel } from "../../CustomerServiceModel";
@@ -13,42 +13,63 @@ export class SingleServiceComponent implements OnInit {
   @Input() index: number;
   @Input() serviceList: Array<Service> = [];
   @Input("serviceTypeList") serviceCategoryList: Array<string>;
-  @Input() asd: any;
+  @Input() customerServiceRowData: any;
+  @Output() public onDelete: EventEmitter<any> = new EventEmitter();
   serviceNameDynamicOptions: Array<{ code: string; value: string }>;
-  selectedServiceName: string;
-  quantity: string;
+  // selectedServiceName: string;
+  // quantity: string;
   isSaveEnabled: boolean;
+  selectedServiceCategory: string;
+  serviceDescription: string;
 
   constructor(private providedServiceService: ProvidedServiceService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // this.quantity = !!this.customerServiceRowData.quantity
+    //   ? this.customerServiceRowData.quantity.toString()
+    //   : "1";
+    // this.selectedServiceName = !!this.customerServiceRowData.serviceTypeId
+    //   ? this.customerServiceRowData.serviceTypeId.toString()
+    //   : null;
+
+    this.selectedServiceCategory = this.customerServiceRowData.serviceTypeId
+      ? this.getCategory(this.customerServiceRowData.serviceTypeId.toString())
+      : null;
+    this.typeChanged();
+    this.serviceSelected();
+  }
+
+  ngOnChanges() {
+    // this.customerServiceRowData = {
+    //   serviceTypeId: this.selectedServiceName,
+    //   isComplete: false,
+    //   isCancelled: false,
+    //   quantity: +this.quantity,
+    //   customerServiceId: "",
+    //   cancelled: false,
+    //   complete: false,
+    // };
+  }
 
   saveRow() {
-    console.log(this.asd);
-    let customerServiceModel: CustomerServiceModel = {
-      serviceTypeId: this.selectedServiceName,
-      isComplete: false,
-      isCancelled: false,
-      quantity: +this.quantity,
-    };
-
     this.providedServiceService
       .saveCustomerService(
         "BakHxqf9Me4mH2FIG66RhzYiUPKJf8",
-        customerServiceModel
+        Array.of(this.customerServiceRowData)
       )
       .subscribe((res) => console.log(res));
   }
 
-  typeChanged(target) {
-    this.serviceNameDynamicOptions = this.filterOnServiceType(target.value);
+  typeChanged() {
+    this.serviceNameDynamicOptions = this.filterOnServiceType(
+      this.selectedServiceCategory
+    );
   }
 
-  serviceSelected(target) {
-    target.parentElement.parentElement.querySelector(
-      ".serviceDescription"
-    ).innerHTML = this.getDescription(target.value);
-
+  serviceSelected() {
+    this.serviceDescription = this.getDescription(
+      this.customerServiceRowData.serviceTypeId
+    );
     this.isSaveEnabled = true;
   }
 
@@ -56,6 +77,7 @@ export class SingleServiceComponent implements OnInit {
     return this.serviceList.find((x) => x.serviceTypeId === serviceTypeId)
       .description;
   }
+
   private filterOnServiceType(serviceType: string) {
     return [
       ...this.serviceList
@@ -64,5 +86,17 @@ export class SingleServiceComponent implements OnInit {
           return { code: x.serviceTypeId, value: x.name };
         }),
     ];
+  }
+
+  private getCategory(serviceTypeId: string): string {
+    return this.serviceList
+      .filter((x) => x.serviceTypeId === serviceTypeId)
+      .map((x) => {
+        return x.serviceType;
+      })[0];
+  }
+
+  delete() {
+    this.onDelete.emit();
   }
 }

@@ -1,6 +1,9 @@
 export class CustomerServiceModel {
-  serviceTypeId: String;
+  customerServiceId: string;
+  serviceTypeId: string;
   isComplete: boolean;
   isCancelled: boolean;
   quantity: number;
+  cancelled: boolean;
+  complete: boolean;
 }

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,6 +35,21 @@ public class ProvidedServicesImpl implements ProvidedServicesService {
     @Autowired
     CustomerServicesRepository customerServicesRepository;
 
+    @Override
+    public CustomersServicesDTO getCustomerServices(String customerId, String date) {
+        Date serviceDate;
+        try {
+            serviceDate = new SimpleDateFormat("yyyy-MM-DD", Locale.ENGLISH).parse(String.valueOf(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+        CustomerEntity customerEntity = findCustomerEntity(customerId);
+        List<CustomerServicesEntity> customerServicesSavedEntityList
+                = customerServicesRepository.findByCustomerEntityAndServiceDate(customerEntity, serviceDate);
+        return createReturnRegisterationDTOList(customerServicesSavedEntityList);
+    }
+
 
     @Override
     public List<ServicesDTO> getAllServices() {
@@ -49,29 +65,54 @@ public class ProvidedServicesImpl implements ProvidedServicesService {
     }
 
     @Override
-    public CustomersServicesDTO saveCustomerService(String customerId, String date, ServiceRegisterationDTO serviceRegDTO) {
-        CustomerServicesEntity customerServicesEntity = new CustomerServicesEntity();
-        CustomerEntity customerEntity = findCustomerEntity(customerId);
-        if (customerEntity != null) {
-            customerServicesEntity.setCustomerEntity(customerEntity);
-        } else return null;
-        ServicesEntity servicesEntity = findByServiceTypeId(serviceRegDTO.getServiceTypeId());
-        if (servicesEntity!=null){
-            customerServicesEntity.setServicesEntity(servicesEntity);
-        } else return null;
-        customerServicesEntity.setQuantity(serviceRegDTO.getQuantity());
-        customerServicesEntity.setComplete(serviceRegDTO.isComplete());
-        customerServicesEntity.setCancelled(serviceRegDTO.isCancelled());
-        try {
-            customerServicesEntity.setServiceDate(new SimpleDateFormat("yyyy-MM-DD", Locale.ENGLISH).parse(String.valueOf(date)));
-        } catch (ParseException e) {
-            e.printStackTrace();
+    public CustomersServicesDTO saveCustomerService(String customerId, String date, List<ServiceRegisterationDTO> serviceRegDTOList) {
+        List<CustomerServicesEntity> customerServicesEntityList = new ArrayList<>();
+        CustomerServicesEntity customerServicesEntity;
+        ServicesEntity servicesEntity;
+        CustomerEntity customerEntity;
+        for (ServiceRegisterationDTO serviceRegDTO : serviceRegDTOList) {
+            customerServicesEntity = new CustomerServicesEntity();
+            customerEntity = findCustomerEntity(customerId);
+            if (customerEntity != null) {
+                customerServicesEntity.setCustomerEntity(customerEntity);
+            } else return null;
+            servicesEntity = findByServiceTypeId(serviceRegDTO.getServiceTypeId());
+            if (servicesEntity != null) {
+                customerServicesEntity.setServicesEntity(servicesEntity);
+            } else return null;
+            customerServicesEntity.setQuantity(serviceRegDTO.getQuantity());
+            customerServicesEntity.setComplete(serviceRegDTO.isComplete());
+            customerServicesEntity.setCancelled(serviceRegDTO.isCancelled());
+            try {
+                customerServicesEntity.setServiceDate(new SimpleDateFormat("yyyy-MM-DD", Locale.ENGLISH).parse(String.valueOf(date)));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            customerServicesEntity.setCustomerServiceId(utils.generateCustomerServiceId(LENGTH_OF_SERVICE_ID));
+            customerServicesEntityList.add(customerServicesEntity);
         }
-        customerServicesEntity.setCustomerServiceId(utils.generateCustomerServiceId(LENGTH_OF_SERVICE_ID));
-        CustomerServicesEntity customerServicesSavedEntity = customerServicesRepository.save(customerServicesEntity);
-        CustomersServicesDTO returnDTO = createReturnRegisterationDTO(customerServicesSavedEntity);
+
+        List<CustomerServicesEntity> customerServicesSavedEntityList = (List<CustomerServicesEntity>) customerServicesRepository.saveAll(customerServicesEntityList);
+        CustomersServicesDTO returnDTO = createReturnRegisterationDTOList(customerServicesSavedEntityList);
         return returnDTO;
 
+    }
+
+    private CustomersServicesDTO createReturnRegisterationDTOList(List<CustomerServicesEntity> customerServicesSavedEntityList) {
+        CustomersServicesDTO customersServicesDTO = new CustomersServicesDTO();
+        customersServicesDTO.setCustomerId(customerServicesSavedEntityList.get(0).getCustomerEntity().getCustomerId());
+        customersServicesDTO.setDate(customerServicesSavedEntityList.get(0).getServiceDate());
+        ServiceRegisterationDTO serviceRegisterationDTO;
+        List<ServiceRegisterationDTO> serviceRegisterationDTOList = new ArrayList<>();
+        List<CustomersServicesDTO> customersServicesDTOList = new ArrayList<>();
+        for (CustomerServicesEntity customerServicesEntity : customerServicesSavedEntityList) {
+            serviceRegisterationDTO = new ServiceRegisterationDTO();
+            BeanUtils.copyProperties(customerServicesEntity, serviceRegisterationDTO);
+            serviceRegisterationDTO.setServiceTypeId(customerServicesEntity.getServicesEntity().getServiceTypeId());
+            serviceRegisterationDTOList.add(serviceRegisterationDTO);
+        }
+        customersServicesDTO.setServiceRegisterationDTOList(serviceRegisterationDTOList);
+        return customersServicesDTO;
     }
 
     private CustomersServicesDTO createReturnRegisterationDTO(CustomerServicesEntity customerServicesSavedEntity) {
@@ -79,7 +120,7 @@ public class ProvidedServicesImpl implements ProvidedServicesService {
         customersServicesDTO.setCustomerId(customerServicesSavedEntity.getCustomerEntity().getCustomerId());
         customersServicesDTO.setDate(customerServicesSavedEntity.getServiceDate());
         ServiceRegisterationDTO serviceRegisterationDTO = new ServiceRegisterationDTO();
-        BeanUtils.copyProperties(customerServicesSavedEntity,serviceRegisterationDTO);
+        BeanUtils.copyProperties(customerServicesSavedEntity, serviceRegisterationDTO);
         serviceRegisterationDTO.setServiceTypeId(customerServicesSavedEntity.getServicesEntity().getServiceTypeId());
         List<ServiceRegisterationDTO> serviceRegisterationDTOList = new ArrayList<>();
         serviceRegisterationDTOList.add(serviceRegisterationDTO);

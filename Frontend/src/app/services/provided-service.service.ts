@@ -19,15 +19,22 @@ export class ProvidedServiceService {
 
   saveCustomerService(
     customerId: string,
-    customerService: CustomerServiceModel
+    customerServiceList: CustomerServiceModel[]
   ): Observable<any> {
     const saveCustomerServiceURL = `${
       this.servicesUrl
     }/customerServices/${customerId}/${getDate()}`;
-    debugger;
-    const url =
-      "http://www.localhost:8080/customerServices/Pa2Hxqf9Me4mH2FIG66RhzYiUPKJf8/2020-10-20";
-    return this.httpClient.post<any>(url, customerService);
+    return this.httpClient.post<any>(
+      saveCustomerServiceURL,
+      customerServiceList
+    );
+  }
+
+  getCustomerServices(customerId: string): Observable<serviceResponseData> {
+    const getCustomerServiceURL = `${
+      this.servicesUrl
+    }/customerServices/${customerId}/${getDate()}`;
+    return this.httpClient.get<serviceResponseData>(getCustomerServiceURL);
   }
 }
 
@@ -41,4 +48,10 @@ function getDate() {
   if (day.length < 2) day = "0" + day;
 
   return [year, month, day].join("-");
+}
+
+interface serviceResponseData {
+  customerId: number;
+  date: Date;
+  serviceRegisterationModelList: Array<CustomerServiceModel>;
 }
