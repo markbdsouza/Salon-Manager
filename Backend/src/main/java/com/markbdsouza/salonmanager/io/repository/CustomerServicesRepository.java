@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface CustomerServicesRepository extends CrudRepository<CustomerServicesEntity, Long> {
     List<CustomerServicesEntity> findByCustomerEntityAndServiceDate(CustomerEntity customerEntity, Date date);
+
+    Long deleteByCustomerEntityAndCustomerServiceId(CustomerEntity customerEntity, String customerServiceId);
 }

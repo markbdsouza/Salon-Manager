@@ -8,3 +8,10 @@
   flex: auto;
   padding: 2rem;
 }
+
+app-header {
+  z-index: 10;
+}
+
+.app-router-outlet {
+}

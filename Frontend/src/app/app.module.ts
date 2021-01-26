@@ -13,7 +13,8 @@ import { CustomerComponent } from "./customer/customer.component";
 import { RouterModule, Routes } from "@angular/router";
 import { CustomerServicesComponent } from "./customer-services/customer-services.component";
 import { ServicesComponent } from "./customer-services/services/services.component";
-import { SingleServiceComponent } from './customer-services/services/single-service/single-service.component';
+import { SingleServiceComponent } from "./customer-services/services/single-service/single-service.component";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 const routes: Routes = [
   { path: "Register", component: CustomerRegisterationComponent },
@@ -42,6 +43,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

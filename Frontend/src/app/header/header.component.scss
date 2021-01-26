@@ -6,8 +6,9 @@
   text-align: center;
   justify-content: space-around;
   align-items: center;
-  background-color: rgba($primary-color, 0.8);
+  background-color: rgba($primary-color, 1);
   border-bottom: solid rgba($highlight-color, 0.7) 2px;
+  z-index: 1;
 }
 
 .appName {

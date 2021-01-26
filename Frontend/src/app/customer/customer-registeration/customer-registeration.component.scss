@@ -10,3 +10,7 @@
     margin: 1rem;
   }
 }
+
+:host {
+  flex-grow: 1;
+}

@@ -15,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -98,7 +99,16 @@ public class ProvidedServicesImpl implements ProvidedServicesService {
 
     }
 
+    @Transactional
+    @Override
+    public boolean delete(String customerId, String customerServiceId) {
+        CustomerEntity customerEntity = findCustomerEntity(customerId);
+        Long deletedEntityId= customerServicesRepository.deleteByCustomerEntityAndCustomerServiceId(customerEntity, customerServiceId);
+        return (deletedEntityId!=0);
+    }
+
     private CustomersServicesDTO createReturnRegisterationDTOList(List<CustomerServicesEntity> customerServicesSavedEntityList) {
+        if (customerServicesSavedEntityList.size()==0) return null;
         CustomersServicesDTO customersServicesDTO = new CustomersServicesDTO();
         customersServicesDTO.setCustomerId(customerServicesSavedEntityList.get(0).getCustomerEntity().getCustomerId());
         customersServicesDTO.setDate(customerServicesSavedEntityList.get(0).getServiceDate());

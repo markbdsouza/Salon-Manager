@@ -1,23 +1,26 @@
 <table class="table table-striped container">
     <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col" style="width: 5%;">#</th>
             <th scope="col">Type</th>
             <th scope="col">Service</th>
-            <th scope="col">Description</th>
-            <th scope="col">Quantity</th>
+            <th scope="col" style="width: 25%;">Description</th>
+            <th scope="col" style="width: 10%;">Quantity</th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
         <tr single-service-tr *ngFor="let customerServiceObj of CustomerServiceList;let i = index" [index]="i"
-            [serviceList]="serviceList" [serviceTypeList]="serviceTypeList"
-            [customerServiceRowData]="customerServiceObj" #serviceComponent (onDelete)="removeService(i)">
+            [serviceList]="serviceList" [serviceTypeList]="serviceTypeList" [customerId]="customerId"
+            [customerServiceRowData]="customerServiceObj" #serviceComponent (onDelete)="removeService(i)"
+            [@flyInOut]="'in'">
             {{customerServiceObj.serviceTypeId}}
         </tr>
     </tbody>
 </table>
+<div class="buttons container">
+    <div class="div"></div>
+    <button class="btn  btn-round btn-primary" (click)=" addServices()">+</button>
+    <button class="btn btn-secondary" (click)="saveAll()">Save All</button>
 
-<button class="btn btn-secondary" (click)="addServices()">Add Services</button>
-<button class="btn btn-secondary" (click)="saveAll()">Save All</button>
-<button class="btn btn-secondary" (click)="doSomething()">DO</button>
+</div>

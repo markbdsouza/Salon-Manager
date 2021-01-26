@@ -33,28 +33,37 @@ public class CustomerServicesController {
             BeanUtils.copyProperties(requestModel, serviceRegDTO);
             serviceRegDTOList.add(serviceRegDTO);
         }
-        CustomersServicesDTO  customersServicesDTO = providedServicesService.saveCustomerService(customerId, Date, serviceRegDTOList);
+        CustomersServicesDTO customersServicesDTO = providedServicesService.saveCustomerService(customerId, Date, serviceRegDTOList);
         CustomerServicesResponseModel returnObject = createResponseObject(customersServicesDTO);
         return new ResponseEntity(returnObject, HttpStatus.CREATED);
     }
 
-    @GetMapping(path="/{customerId}/{Date}")
+    @GetMapping(path = "/{customerId}/{Date}")
     public ResponseEntity<CustomerServicesResponseModel> getCustomerServices(@PathVariable String customerId,
-                                                                              @PathVariable String Date
-                                                                              ) {
-        CustomersServicesDTO  customersServicesDTO = providedServicesService.getCustomerServices(customerId, Date);
+                                                                             @PathVariable String Date
+    ) {
+        CustomersServicesDTO customersServicesDTO = providedServicesService.getCustomerServices(customerId, Date);
         CustomerServicesResponseModel returnObject = createResponseObject(customersServicesDTO);
-        return new ResponseEntity(returnObject, HttpStatus.CREATED);
+        return new ResponseEntity(returnObject, HttpStatus.OK);
     }
 
+    @DeleteMapping(path = "/{customerId}/{customerServiceId}")
+    public ResponseEntity<Void> deleteCustomerService(@PathVariable String customerId, @PathVariable String customerServiceId) {
+        boolean isRemoved = providedServicesService.delete(customerId, customerServiceId);
+        if (!isRemoved) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-    private CustomerServicesResponseModel createResponseObject(CustomersServicesDTO  customersServicesDTO){
+    private CustomerServicesResponseModel createResponseObject(CustomersServicesDTO customersServicesDTO) {
+        if (customersServicesDTO == null) return null;
         CustomerServicesResponseModel returnObject = new CustomerServicesResponseModel();
         List<ServiceRegisterationModel> serviceRegisterationModelList = new ArrayList<>();
         ServiceRegisterationModel serviceRegisterationModel;
         BeanUtils.copyProperties(customersServicesDTO, returnObject);
-        for(ServiceRegisterationDTO serviceRegisterationDTO: customersServicesDTO.getServiceRegisterationDTOList()){
-            serviceRegisterationModel=new ServiceRegisterationModel();
+        for (ServiceRegisterationDTO serviceRegisterationDTO : customersServicesDTO.getServiceRegisterationDTOList()) {
+            serviceRegisterationModel = new ServiceRegisterationModel();
             BeanUtils.copyProperties(serviceRegisterationDTO, serviceRegisterationModel);
             serviceRegisterationModelList.add(serviceRegisterationModel);
         }

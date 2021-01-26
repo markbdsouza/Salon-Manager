@@ -11,9 +11,28 @@ import {
 } from "@angular/core";
 import { Service } from "../service";
 import { ActivatedRoute } from "@angular/router";
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from "@angular/animations";
 
 @Component({
   selector: "app-services",
+  animations: [
+    trigger("flyInOut", [
+      state("in", style({ transform: "translateX(0)" })),
+      transition("void => *", [
+        style({ transform: "translateX(-100%)" }),
+        animate(200),
+      ]),
+      transition("* => void", [
+        animate(200, style({ transform: "translateX(100%)" })),
+      ]),
+    ]),
+  ],
   templateUrl: "./services.component.html",
   styleUrls: ["./services.component.scss"],
 })
@@ -24,7 +43,6 @@ export class ServicesComponent implements OnInit {
   components: QueryList<SingleServiceComponent>;
   customerId: string;
 
-  //serviceCodeValueMap: { code: string; value: string }[];
   CustomerServiceList: Array<CustomerServiceModel> = [];
 
   constructor(
@@ -35,29 +53,31 @@ export class ServicesComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       this.customerId = params["id"];
-      this.providedServiceService
-        .getCustomerServices(this.customerId)
-        .subscribe(
-          (res) => {
-            res.serviceRegisterationModelList.forEach((x) =>
-              this.CustomerServiceList.push(x)
-            );
-          },
-          (err) => console.log(err)
-        );
-    });
 
-    this.providedServiceService.findAllServices().subscribe(
-      (res) => {
-        this.serviceList = res;
-        this.serviceTypeList = [
-          ...new Set(this.serviceList.map((x) => x.serviceType)),
-        ];
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+      this.providedServiceService.findAllServices().subscribe(
+        (res) => {
+          this.serviceList = res;
+          this.serviceTypeList = [
+            ...new Set(this.serviceList.map((x) => x.serviceType)),
+          ];
+          this.providedServiceService
+            .getCustomerServices(this.customerId)
+            .subscribe(
+              (res) => {
+                if (res != null)
+                  res.serviceRegisterationModelList.forEach((x) =>
+                    this.CustomerServiceList.push(x)
+                  );
+                if (this.CustomerServiceList.length === 0) this.addServices();
+              },
+              (err) => console.log(err)
+            );
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    });
   }
 
   addServices() {
@@ -83,11 +103,5 @@ export class ServicesComponent implements OnInit {
 
   removeService(index: number) {
     this.CustomerServiceList.splice(index, 1);
-  }
-
-  doSomething() {
-    debugger;
-    let childComponents = this.components.toArray();
-    this.CustomerServiceList = [];
   }
 }

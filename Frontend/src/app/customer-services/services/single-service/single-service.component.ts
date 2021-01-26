@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { INSPECT_MAX_BYTES } from "buffer";
 import { ProvidedServiceService } from "src/app/services/provided-service.service";
 import { CustomerServiceModel } from "../../CustomerServiceModel";
@@ -13,48 +14,32 @@ export class SingleServiceComponent implements OnInit {
   @Input() index: number;
   @Input() serviceList: Array<Service> = [];
   @Input("serviceTypeList") serviceCategoryList: Array<string>;
-  @Input() customerServiceRowData: any;
+  @Input() customerServiceRowData: CustomerServiceModel;
+  @Input() customerId: string;
   @Output() public onDelete: EventEmitter<any> = new EventEmitter();
   serviceNameDynamicOptions: Array<{ code: string; value: string }>;
-  // selectedServiceName: string;
-  // quantity: string;
   isSaveEnabled: boolean;
   selectedServiceCategory: string;
   serviceDescription: string;
+  isServiceEnabled: boolean = false;
 
   constructor(private providedServiceService: ProvidedServiceService) {}
 
   ngOnInit() {
-    // this.quantity = !!this.customerServiceRowData.quantity
-    //   ? this.customerServiceRowData.quantity.toString()
-    //   : "1";
-    // this.selectedServiceName = !!this.customerServiceRowData.serviceTypeId
-    //   ? this.customerServiceRowData.serviceTypeId.toString()
-    //   : null;
-
     this.selectedServiceCategory = this.customerServiceRowData.serviceTypeId
       ? this.getCategory(this.customerServiceRowData.serviceTypeId.toString())
       : null;
     this.typeChanged();
-    this.serviceSelected();
-  }
-
-  ngOnChanges() {
-    // this.customerServiceRowData = {
-    //   serviceTypeId: this.selectedServiceName,
-    //   isComplete: false,
-    //   isCancelled: false,
-    //   quantity: +this.quantity,
-    //   customerServiceId: "",
-    //   cancelled: false,
-    //   complete: false,
-    // };
+    if (!this.customerServiceRowData.quantity)
+      this.customerServiceRowData.quantity = 1;
+    if (this.customerServiceRowData.serviceTypeId) this.serviceSelected();
+    this.isSaveEnabled = !this.customerServiceRowData.customerServiceId;
   }
 
   saveRow() {
     this.providedServiceService
       .saveCustomerService(
-        "BakHxqf9Me4mH2FIG66RhzYiUPKJf8",
+        this.customerId,
         Array.of(this.customerServiceRowData)
       )
       .subscribe((res) => console.log(res));
@@ -64,9 +49,11 @@ export class SingleServiceComponent implements OnInit {
     this.serviceNameDynamicOptions = this.filterOnServiceType(
       this.selectedServiceCategory
     );
+    if (!!this.selectedServiceCategory) this.isServiceEnabled = true;
   }
 
   serviceSelected() {
+    debugger;
     this.serviceDescription = this.getDescription(
       this.customerServiceRowData.serviceTypeId
     );
