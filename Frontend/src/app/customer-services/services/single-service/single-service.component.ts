@@ -1,6 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { INSPECT_MAX_BYTES } from "buffer";
 import { ProvidedServiceService } from "src/app/services/provided-service.service";
 import { CustomerServiceModel } from "../../CustomerServiceModel";
 import { Service } from "../../service";
@@ -33,16 +31,17 @@ export class SingleServiceComponent implements OnInit {
     if (!this.customerServiceRowData.quantity)
       this.customerServiceRowData.quantity = 1;
     if (this.customerServiceRowData.serviceTypeId) this.serviceSelected();
-    this.isSaveEnabled = !this.customerServiceRowData.customerServiceId;
+    this.enableSave();
   }
 
   saveRow() {
+    this.isSaveEnabled = false;
     this.providedServiceService
       .saveCustomerService(
         this.customerId,
         Array.of(this.customerServiceRowData)
       )
-      .subscribe((res) => console.log(res));
+      .subscribe((res) => {});
   }
 
   typeChanged() {
@@ -52,12 +51,21 @@ export class SingleServiceComponent implements OnInit {
     if (!!this.selectedServiceCategory) this.isServiceEnabled = true;
   }
 
+  enableSave() {
+    if (this.customerServiceRowData.customerServiceId) {
+      this.isSaveEnabled = false;
+    } else if (
+      this.customerServiceRowData.customerServiceId === undefined ||
+      this.customerServiceRowData.serviceTypeId !== undefined
+    )
+      this.isSaveEnabled = true;
+  }
+
   serviceSelected() {
-    debugger;
     this.serviceDescription = this.getDescription(
       this.customerServiceRowData.serviceTypeId
     );
-    this.isSaveEnabled = true;
+    this.enableSave();
   }
 
   private getDescription(serviceTypeId: string) {

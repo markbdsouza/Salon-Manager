@@ -3,6 +3,7 @@ package com.markbdsouza.salonmanager.ui.model.request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CustomerServiceRegistrationRequestModel {
+    private String customerServiceId;
     private String serviceTypeId;
     @JsonProperty
     private boolean isComplete;
@@ -49,5 +50,13 @@ public class CustomerServiceRegistrationRequestModel {
 
     public void setCancelled(boolean cancelled) {
         isCancelled = cancelled;
+    }
+
+    public String getCustomerServiceId() {
+        return customerServiceId;
+    }
+
+    public void setCustomerServiceId(String customerServiceId) {
+        this.customerServiceId = customerServiceId;
     }
 }

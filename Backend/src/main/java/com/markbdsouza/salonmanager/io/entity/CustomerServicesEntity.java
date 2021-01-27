@@ -13,10 +13,10 @@ public class CustomerServicesEntity {
     @Column
     private String customerServiceId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false , cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false , cascade = CascadeType.PERSIST)
     @JoinColumn(name = "customer_id", nullable = false)
     private CustomerEntity customerEntity;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "service_id", nullable = false)
     private ServicesEntity servicesEntity;
 //    @ManyToOne(fetch = FetchType.LAZY, optional = false)

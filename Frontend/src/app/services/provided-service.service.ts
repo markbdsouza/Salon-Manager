@@ -36,6 +36,14 @@ export class ProvidedServiceService {
     }/customerServices/${customerId}/${getDate()}`;
     return this.httpClient.get<serviceResponseData>(getCustomerServiceURL);
   }
+
+  deleteCustomerService(
+    customerId: string,
+    customerServiceId: string
+  ): Observable<null> {
+    const deleteCustomerServiceURL = `${this.servicesUrl}/customerServices/${customerId}/${customerServiceId}`;
+    return this.httpClient.delete<null>(deleteCustomerServiceURL);
+  }
 }
 
 function getDate() {

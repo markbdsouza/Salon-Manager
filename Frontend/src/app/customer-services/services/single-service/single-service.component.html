@@ -1,7 +1,7 @@
 <td scope="row" class="width-small">{{index+1}}</td>
 <td class="width-medium">
     <select name="" id="" class="form-control" (change)="typeChanged()" [(ngModel)]="selectedServiceCategory">
-        <option [ngValue]="null" disabled>Service Type</option>
+        <option [ngValue]="null" disabled>Choose a Type</option>
         <option *ngFor="let type of serviceCategoryList " [value]="type">
             {{type}}
         </option>

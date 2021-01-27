@@ -72,15 +72,20 @@ public class ProvidedServicesImpl implements ProvidedServicesService {
         ServicesEntity servicesEntity;
         CustomerEntity customerEntity;
         for (ServiceRegisterationDTO serviceRegDTO : serviceRegDTOList) {
-            customerServicesEntity = new CustomerServicesEntity();
-            customerEntity = findCustomerEntity(customerId);
-            if (customerEntity != null) {
-                customerServicesEntity.setCustomerEntity(customerEntity);
-            } else return null;
-            servicesEntity = findByServiceTypeId(serviceRegDTO.getServiceTypeId());
-            if (servicesEntity != null) {
-                customerServicesEntity.setServicesEntity(servicesEntity);
-            } else return null;
+            if (serviceRegDTO.getCustomerServiceId() != null) {
+                customerServicesEntity = customerServicesRepository.findByCustomerServiceId(serviceRegDTO.getCustomerServiceId());
+            } else {
+                customerServicesEntity = new CustomerServicesEntity();
+                customerServicesEntity.setCustomerServiceId(utils.generateCustomerServiceId(LENGTH_OF_SERVICE_ID));
+                customerEntity = findCustomerEntity(customerId);
+                if (customerEntity != null) {
+                    customerServicesEntity.setCustomerEntity(customerEntity);
+                } else return null;
+                servicesEntity = findByServiceTypeId(serviceRegDTO.getServiceTypeId());
+                if (servicesEntity != null) {
+                    customerServicesEntity.setServicesEntity(servicesEntity);
+                } else return null;
+            }
             customerServicesEntity.setQuantity(serviceRegDTO.getQuantity());
             customerServicesEntity.setComplete(serviceRegDTO.isComplete());
             customerServicesEntity.setCancelled(serviceRegDTO.isCancelled());
@@ -89,7 +94,6 @@ public class ProvidedServicesImpl implements ProvidedServicesService {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            customerServicesEntity.setCustomerServiceId(utils.generateCustomerServiceId(LENGTH_OF_SERVICE_ID));
             customerServicesEntityList.add(customerServicesEntity);
         }
 
@@ -103,12 +107,12 @@ public class ProvidedServicesImpl implements ProvidedServicesService {
     @Override
     public boolean delete(String customerId, String customerServiceId) {
         CustomerEntity customerEntity = findCustomerEntity(customerId);
-        Long deletedEntityId= customerServicesRepository.deleteByCustomerEntityAndCustomerServiceId(customerEntity, customerServiceId);
-        return (deletedEntityId!=0);
+        Long deletedEntityId = customerServicesRepository.deleteByCustomerEntityAndCustomerServiceId(customerEntity, customerServiceId);
+        return (deletedEntityId != 0);
     }
 
     private CustomersServicesDTO createReturnRegisterationDTOList(List<CustomerServicesEntity> customerServicesSavedEntityList) {
-        if (customerServicesSavedEntityList.size()==0) return null;
+        if (customerServicesSavedEntityList.size() == 0) return null;
         CustomersServicesDTO customersServicesDTO = new CustomersServicesDTO();
         customersServicesDTO.setCustomerId(customerServicesSavedEntityList.get(0).getCustomerEntity().getCustomerId());
         customersServicesDTO.setDate(customerServicesSavedEntityList.get(0).getServiceDate());

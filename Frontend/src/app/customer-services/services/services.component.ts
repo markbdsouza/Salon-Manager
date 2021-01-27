@@ -56,6 +56,7 @@ export class ServicesComponent implements OnInit {
 
       this.providedServiceService.findAllServices().subscribe(
         (res) => {
+          console.table(res);
           this.serviceList = res;
           this.serviceTypeList = [
             ...new Set(this.serviceList.map((x) => x.serviceType)),
@@ -102,6 +103,18 @@ export class ServicesComponent implements OnInit {
   }
 
   removeService(index: number) {
-    this.CustomerServiceList.splice(index, 1);
+    let deletedCustomerService: Array<CustomerServiceModel> = this.CustomerServiceList.splice(
+      index,
+      1
+    );
+    console.log(deletedCustomerService);
+    this.providedServiceService
+      .deleteCustomerService(
+        this.customerId,
+        deletedCustomerService[0].customerServiceId
+      )
+      .subscribe((res) => {
+        console.log("deleted");
+      });
   }
 }
